@@ -23,3 +23,15 @@ pub fn get_inputs() -> Result<PathBuf, Box<dyn Error>> {
         return Err("No such file or directory".into());
     }
 }
+
+#[cfg(test)]
+mod tests{
+    use std::path::PathBuf;
+    use super::*;
+
+    #[test]
+    fn test_args_return_value() {
+        let args = get_inputs().unwrap();
+        assert_eq!(args, PathBuf::from("home/natty/Desktop/Resume.pdf"));
+    } 
+}
