@@ -1,9 +1,16 @@
 use std::{
-    io::error::Error,
-    path,
-}
+    error::Error,
+    path::PathBuf,
+};
 
+pub fn zip_compress(file: PathBuf) -> Result<(PathBuf, String), Box<dyn Error>> {
+    let file_name = file.file_name()
+                               .ok_or("unable to fetch file name")?
+                               .to_string_lossy()
+                               .to_string();
+    let parent_dir = file.parent().ok_or("no parent directory found")?;
+    let zip_file = file_name + ".zip";
 
-fn (file: PathBuf) -> Result<(PathBuf, String), io::Error> {
-
+    let new_path = parent_dir.join(zip_file);
+    Ok(())
 }
