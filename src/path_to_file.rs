@@ -10,6 +10,7 @@ use std::{
 pub fn read_file(file: PathBuf) -> Result<(BufReader<File>, String), Box<dyn Error>> {
     let file_contents = File::open(&file)?;
 
+    //we get the path, unwrap it, get the file name, then convert to string lossy before converting it to string.
     let file_name = get_inputs()?.file_name()
                               .ok_or("file name not found")?
                               .to_string_lossy()
