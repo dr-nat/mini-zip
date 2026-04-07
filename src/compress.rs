@@ -34,6 +34,7 @@ pub fn zip_compress(file: PathBuf) -> Result<(PathBuf, String), Box<dyn Error>> 
 
     let (mut buffer, buf_file_name) = original_file;
     let written_file_to_zip = std::io::copy(&mut buffer, &mut zip)?;
+    zip.finish()?;
 
 
     Ok((PathBuf::new(), String::from("nat")))
