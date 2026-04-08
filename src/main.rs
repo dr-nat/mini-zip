@@ -1,18 +1,11 @@
 use my_zip::{inputs, 
     compress::zip_compress
 };
+use std::error::Error;
 
 
-fn main() {
-    let inputs = inputs::get_inputs().unwrap();
-
-    //let path = match inputs {
-        //Ok(_) => {},
-        //Err(e) => {
-            //eprint!("Error: {}", e);
-            //std::process::exit(1);
-        //},
-    //};
+fn main() -> Result<(), Box<dyn Error>> {
+    let inputs = inputs::get_inputs()?;
 
     let compressed_file = zip_compress(inputs);
 
@@ -23,4 +16,6 @@ fn main() {
             std::process::exit(2);
         }
     }
+
+    Ok(())
 }
