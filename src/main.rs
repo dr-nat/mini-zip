@@ -1,13 +1,26 @@
-use my_zip::inputs;
+use my_zip::{inputs, 
+    compress::zip_compress
+};
+
 
 fn main() {
-    let inputs = inputs::get_inputs();
+    let inputs = inputs::get_inputs().unwrap();
 
-    match inputs {
+    //let path = match inputs {
+        //Ok(_) => {},
+        //Err(e) => {
+            //eprint!("Error: {}", e);
+            //std::process::exit(1);
+        //},
+    //};
+
+    let compressed_file = zip_compress(inputs);
+
+    match compressed_file {
         Ok(_) => {},
-        Err(e) => {
-            eprint!("Error: {}", e);
-            std::process::exit(1);
-        },
+        Err(err) => {
+            eprint!("Error: {}", err);
+            std::process::exit(2);
+        }
     }
 }
