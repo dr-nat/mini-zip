@@ -4,24 +4,26 @@ use std::{
     path::PathBuf,
 };
 
-pub fn get_inputs() -> Result<PathBuf, Box<dyn Error>> {
-    let  args: Vec<String> = env::args().collect();
+pub fn get_inputs() -> Result<Vec<PathBuf>, Box<dyn Error>> {
+    let  args = env::args();
 
     if args.len() < 2 {
         return Err("No arguments were provided".into());
     }
+    let mut paths: Vec<PathBuf> = Vec::new();
 
-    let first_arg = args.get(1).ok_or("File path not found")?;
+    for arguments in args {
+        let file_path = PathBuf::from(arguments);
+        let file = file_path.metadata()?;
 
-    let file_path = PathBuf::from(first_arg);
-
-    let file = file_path.metadata()?;
-
-    if file.is_file() {
-        return Ok(file_path);
-    } else {
-        return Err("No such file or directory".into());
+        if file.is_file() {
+            paths.push(file_path);
+        } else {
+            return Err("No such file or directory".into());
+        }
     }
+
+    Ok(paths)
 }
 
 #[cfg(test)]
