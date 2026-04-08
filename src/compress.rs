@@ -21,7 +21,7 @@ pub fn zip_compress(file: PathBuf) -> Result<(PathBuf, String), Box<dyn Error>> 
     let zip_file_name = file_name.clone() + ".zip";
 
     let new_path = parent_dir.join(&zip_file_name);
-    let zip_file = File::create(zip_file_name)?;
+    let zip_file = File::create(&new_path)?;
 
     let mut zip = zip::ZipWriter::new(zip_file);
 
