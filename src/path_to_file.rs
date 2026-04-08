@@ -1,21 +1,28 @@
-use crate::inputs::get_inputs;
+//use crate::inputs::get_inputs;
 use std::{
     fs::*,
     io::BufReader,
-    //io::Read,
     path::PathBuf,
     error::Error,
 };
 
-pub fn read_file(file: PathBuf) -> Result<(BufReader<File>, String), Box<dyn Error>> {
-    let file_contents = File::open(&file)?;
+pub fn read_file(file: Vec<PathBuf>) -> Result<Vec<(BufReader<File>, String)>, Box<dyn Error>> {
 
-    //we get the path, unwrap it, get the file name, then convert to string lossy before converting it to string.
-    let file_name = get_inputs()?.file_name()
-                              .ok_or("file name not found")?
-                              .to_string_lossy()
-                              .to_string();
-    let buffer = BufReader::new(file_contents);
+    let file_paths: Vec<(BufReader<File>, String)> = Vec::new();
 
-    Ok((buffer, file_name))
+    for files in file {
+        let file_contents = File::open(&files)?;
+        let buffer = BufReader::new(file_contents);
+
+        //we get the path, unwrap it, get the file name, then convert to string lossy before converting it to string.
+
+        let file_name = files.file_name()
+            .ok_or("file name not found")?
+            .to_string_lossy()
+            .to_string();
+
+        file_paths.push((buffer, file_name));
+    }
+
+    Ok(file_paths)
 }
