@@ -8,7 +8,7 @@ use std::{
 
 pub fn read_file(file: Vec<PathBuf>) -> Result<Vec<(BufReader<File>, String)>, Box<dyn Error>> {
 
-    let file_paths: Vec<(BufReader<File>, String)> = Vec::new();
+    let mut file_paths: Vec<(BufReader<File>, String)> = Vec::new();
 
     for files in file {
         let file_contents = File::open(&files)?;
