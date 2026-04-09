@@ -5,9 +5,9 @@ use std::error::Error;
 
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let inputs = inputs::get_inputs()?;
 
-    let compressed_file = zip_compress(inputs);
+    let input = inputs::get_inputs()?;
+    let compressed_file = zip_compress(input);
 
     match compressed_file {
         Ok(_) => {},
